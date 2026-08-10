@@ -41,3 +41,7 @@ services:
       # Example: https://traveladvisor.onrender.com
       - key: CORS_ORIGIN
         sync: false
+      # ── Frontend API Base URL: e.g. https://traveladvisor-api.onrender.com/api ──
+      - key: REACT_APP_API_URL
+        sync: false
+
