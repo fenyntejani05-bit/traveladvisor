@@ -1,0 +1,7 @@
+/*
+  SPA Routing fallback for Render Static Sites (if deployed separately).
+  For the current single-service setup (Express serves React build),
+  this file is handled by Express's catch-all route in app.js.
+  Kept here for compatibility if the project is ever split into two services.
+*/
+/* /index.html 200 */

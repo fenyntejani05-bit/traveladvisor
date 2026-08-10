@@ -1,0 +1,43 @@
+# render.yaml — Render Blueprint for TravelAdvisor
+# Deploy backend (Express) as a Web Service.
+# The backend serves the React production build via express.static.
+# See: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: traveladvisor-api
+    runtime: node
+    plan: free
+    rootDir: .
+    # 1. Install all deps, build React frontend, install backend deps
+    buildCommand: npm install && npm run build && cd backend && npm install
+    # 2. Start Express server (serves both API + React build)
+    startCommand: cd backend && node server.js
+    # Health check on root endpoint
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Render auto-assigns PORT — do NOT set this manually
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      # ── Database (fill in Render dashboard after creating cloud MySQL) ──
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "3306"
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+      # Alternative: provide a full DATABASE_URL (Aiven/PlanetScale format)
+      - key: DATABASE_URL
+        sync: false
+      # ── CORS: set to your Render frontend URL after first deploy ──
+      # Example: https://traveladvisor.onrender.com
+      - key: CORS_ORIGIN
+        sync: false

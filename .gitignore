@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build output
+build/
+
+# Environment files
+.env
+backend/.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Uploads (user-generated)
+backend/uploads/destinations/*
+backend/uploads/hotels/*
+!backend/uploads/destinations/.gitkeep
+!backend/uploads/hotels/.gitkeep
