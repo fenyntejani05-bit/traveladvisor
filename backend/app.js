@@ -22,7 +22,20 @@ const errorHandler = require('./middleware/errorHandler');
 const app = express();
 
 // ─── Security Middleware ───────────────────────────────────────────────────────
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc:  ["'self'", "'unsafe-inline'"],
+        styleSrc:   ["'self'", "'unsafe-inline'", "https:"],
+        imgSrc:     ["'self'", "data:", "https:", "blob:"],
+        fontSrc:    ["'self'", "https:", "data:"],
+        connectSrc: ["'self'", "https:"],
+      },
+    },
+  })
+);
 
 // ─── CORS ─────────────────────────────────────────────────────────────────────
 // Supports a single origin or comma-separated list in CORS_ORIGIN env var.
