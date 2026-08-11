@@ -63,12 +63,15 @@ const testConnection = async () => {
 
 /**
  * Execute a parameterized query against the pool.
+ * Uses pool.query() instead of pool.execute() to avoid
+ * "Incorrect arguments to mysqld_stmt_execute" errors with
+ * cloud MySQL (Aiven) when LIMIT/OFFSET are passed as numbers.
  * @param {string} sql  - SQL statement with `?` placeholders
  * @param {Array}  params - Bound parameters
  * @returns {Promise<[rows, fields]>}
  */
 const query = async (sql, params = []) => {
-  return pool.execute(sql, params);
+  return pool.query(sql, params);
 };
 
 module.exports = { pool, query, testConnection };
