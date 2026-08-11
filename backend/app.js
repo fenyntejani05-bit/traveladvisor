@@ -60,7 +60,8 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ─── Health Check ─────────────────────────────────────────────────────────────
-app.get('/', (req, res) => {
+// In production, React app is served at / — health check at /api/health
+const healthResponse = (req, res) => {
   res.status(200).json({
     success: true,
     message: '🌍 TravelAdvisor REST API is live and running!',
@@ -75,7 +76,11 @@ app.get('/', (req, res) => {
       users:        '/api/users',
     },
   });
-});
+};
+app.get('/api/health', healthResponse);
+if (process.env.NODE_ENV !== 'production') {
+  app.get('/', healthResponse);
+}
 
 // ─── API Routes ────────────────────────────────────────────────────────────────
 app.use('/api/auth',         authRoutes);

@@ -13,8 +13,8 @@ services:
     buildCommand: npm install && npm run build && cd backend && npm install
     # 2. Start Express server (serves both API + React build)
     startCommand: cd backend && node server.js
-    # Health check on root endpoint
-    healthCheckPath: /
+    # Health check endpoint (React app is served at /)
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production

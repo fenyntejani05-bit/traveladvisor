@@ -22,7 +22,7 @@ if (process.env.DATABASE_URL) {
     ssl: { rejectUnauthorized: false },
   };
 } else {
-  // Local development
+  // Local development OR individual env vars on Render
   poolConfig = {
     host:     process.env.DB_HOST     || 'localhost',
     port:     parseInt(process.env.DB_PORT || '3306'),
@@ -36,6 +36,11 @@ if (process.env.DATABASE_URL) {
     supportBigNumbers: true,
     bigNumberStrings: false,
   };
+
+  // Aiven and other cloud MySQL providers require SSL in production
+  if (process.env.NODE_ENV === 'production') {
+    poolConfig.ssl = { rejectUnauthorized: false };
+  }
 }
 
 const pool = mysql2.createPool(poolConfig);
