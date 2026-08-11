@@ -82,6 +82,26 @@ if (process.env.NODE_ENV !== 'production') {
   app.get('/', healthResponse);
 }
 
+// ─── Temporary DB Debug (REMOVE after deployment works) ───────────────────────
+app.get('/api/debug-db', async (req, res) => {
+  const db = require('./config/db');
+  const info = {
+    NODE_ENV: process.env.NODE_ENV,
+    DB_HOST: process.env.DB_HOST ? '✅ set' : '❌ missing',
+    DB_PORT: process.env.DB_PORT || '❌ missing',
+    DB_USER: process.env.DB_USER ? '✅ set' : '❌ missing',
+    DB_PASSWORD: process.env.DB_PASSWORD ? '✅ set' : '❌ missing',
+    DB_NAME: process.env.DB_NAME || '❌ missing',
+    DATABASE_URL: process.env.DATABASE_URL ? '✅ set' : '❌ missing',
+  };
+  try {
+    const [rows] = await db.query('SELECT 1 as ok');
+    res.json({ success: true, env: info, db: 'connected', result: rows });
+  } catch (err) {
+    res.json({ success: false, env: info, db: 'failed', error: err.message, code: err.code });
+  }
+});
+
 // ─── API Routes ────────────────────────────────────────────────────────────────
 app.use('/api/auth',         authRoutes);
 app.use('/api/categories',   categoryRoutes);
