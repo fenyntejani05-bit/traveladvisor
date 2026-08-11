@@ -3,7 +3,7 @@
 > **Week 6 — Deployment, Maintenance, and Project Reflection**  
 > A production-deployed, fully tested, and cloud-hosted travel recommendation web application for discovering tourist destinations and hotels across India.
 
-🌐 **Live App:** `https://traveladvisor.onrender.com` *(update after first deploy)*
+🌐 **Live App:** `https://traveladvisor-api.onrender.com` 
 
 ---
 
@@ -25,7 +25,6 @@
 14. [Deployment on Render](#14-deployment-on-render)  
 15. [Environment Variables](#15-environment-variables)  
 16. [Future Improvements](#16-future-improvements)  
-
 ---
 
 ## 1. Project Overview
